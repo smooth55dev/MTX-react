@@ -1,6 +1,6 @@
 {
-  "name": "matx-react",
-  "version": "3.1.0",
+  "name": "BRIDGE",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "react-scripts start",

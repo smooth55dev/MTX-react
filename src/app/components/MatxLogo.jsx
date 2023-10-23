@@ -6,8 +6,8 @@ const MatxLogo = ({ className }) => {
 
   return (
     <svg
-      width="24px"
-      height="24px"
+      width="50px"
+      height="50px"
       className={className}
       viewBox="0 0 240 239"
       version="1.1"

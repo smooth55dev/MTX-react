@@ -103,7 +103,7 @@ const MatxCustomizer = () => {
     <Fragment>
       <Tooltip title="Theme Settings" placement="left">
         <Label className="open" onClick={tooglePanel}>
-          DEMOS
+          Themes
         </Label>
       </Tooltip>
 
@@ -121,31 +121,13 @@ const MatxCustomizer = () => {
                 <Icon className="icon" color="primary">
                   settings
                 </Icon>
-                <H5 sx={{ ml: 1, fontSize: '1rem' }}>Theme Settings</H5>
+                <H5 sx={{ ml: 1, fontSize: '1rem' }}>テーマ設定</H5>
               </Box>
 
               <IconButton onClick={tooglePanel}>
                 <Icon className="icon">close</Icon>
               </IconButton>
             </Controller>
-
-            <Box px={3} mb={2} display="flex">
-              <Button
-                variant="outlined"
-                onClick={() => handleTabChange(0)}
-                color={tabIndex === 0 ? 'secondary' : 'primary'}
-                sx={{ mr: 2 }}
-              >
-                Demos
-              </Button>
-              <Button
-                variant="outlined"
-                onClick={() => handleTabChange(1)}
-                color={tabIndex === 1 ? 'secondary' : 'primary'}
-              >
-                Settings
-              </Button>
-            </Box>
 
             <StyledScrollBar options={{ suppressScrollX: true }}>
               {tabIndex === 0 && (
@@ -177,18 +159,6 @@ const MatxCustomizer = () => {
                     ))}
                   </Box>
                 </Box>
-              )}
-
-              {/* END LAYOUT */}
-              {tabIndex === 1 && (
-                <div>
-                  <div className="helpText">
-                    We used React context API to control layout. Check out the{' '}
-                    <Link href="http://demos.ui-lib.com/matx-react-doc/layout.html" target="_blank">
-                      Documentation
-                    </Link>
-                  </div>
-                </div>
               )}
             </StyledScrollBar>
           </MaxCustomaizer>
