@@ -12,9 +12,9 @@ import moment from 'moment';
 import { Breadcrumb, SimpleCard } from 'app/components';
 import FullEditDataGrid from '../../../lib/table/index';
 import { useEffect, useState } from 'react';
-import sellerController from './seller';
+import UsersController from './users';
 
-export default function SellerManageGrid() {
+export default function UserList() {
   const [rows, setRawRows] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -23,7 +23,7 @@ export default function SellerManageGrid() {
   };
   useEffect(() => {
     setLoading(true);
-    sellerController
+    UsersController
       .getAll()
       .then((res) => {
         setRows(res.data);
@@ -36,7 +36,7 @@ export default function SellerManageGrid() {
   const onSaveRow = (id, updatedRow, oldRow, oldRows) => {
     console.log(updatedRow);
 
-    sellerController
+    UsersController
       .saveRow(updatedRow)
       .then((res) => {
         const dbRow = res.data;
@@ -48,7 +48,7 @@ export default function SellerManageGrid() {
   };
 
   const onDeleteRow = (id, oldRow, oldRows) => {
-    sellerController
+    UsersController
       .deleteRow(id)
       .then((res) => {
         const dbRowId = res.data.id;
@@ -101,8 +101,9 @@ export default function SellerManageGrid() {
 class UDatepicker extends Component {
   constructor(props) {
     super(props);
+    console.log(props)
     this.state = {
-      startDate: moment(this.props.value, 'MM-DD-YYYY')
+      startDate: moment(props.params, 'MM-DD-YYYY')
     };
   }
 
@@ -176,21 +177,56 @@ class UserGroup extends Component {
   }
 }
 
-const UserImage = () => {
-  const initialImageSource = 'https://example.com/initial-image.jpg';
-  const [imageURL, setImageURL] = useState(initialImageSource);
-
-  const handleImageClick = () => {
-    const newImageSource = 'https://example.com/new-image.jpg';
-    setImageURL(newImageSource);
+class UserImage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selectedImage: props.value,
+    };
+  }
+  
+  handleImageClick = () => {
+    // const inputElement = document.getElementById('imageInput');
+    // inputElement.click();
+  };
+  
+  handleImageUpload = event => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+  
+    reader.onload = () => {
+      const imageDataUrl = reader.result;
+      this.setState({ selectedImage: imageDataUrl });
+    };
+  
+    if (file) {
+      reader.readAsDataURL(file);
+    }
   };
 
-  return (
-    <div>
-      <img src={imageURL} alt="Clickable Image" onClick={handleImageClick} />
-    </div>
-  );
-};
+  render() {
+    const { selectedImage } = this.state;
+  
+    return (
+      <div>
+        <div className="image-container" onClick={this.handleImageClick}>
+          <img
+            src={selectedImage || 'placeholder.jpg'}
+            alt="Selected"
+            style={{ maxWidth: '300px', cursor: 'pointer' }}
+          />
+        </div>
+        <input
+          id="imageInput"
+          type="file"
+          accept="image/*"
+          style={{ display: 'none' }}
+          onChange={this.handleImageUpload}
+        />
+      </div>
+    );
+  }
+}
 
 const columns = [
   {
@@ -219,11 +255,12 @@ const columns = [
     editable: true
   },
   {
-    field: 'startDate',
+    field: 'dateCreated',
     headerName: 'Start Date',
     width:100,
     headerAlign: 'center',
     type: 'dateTime',
+    valueGetter: (params) => new Date(params.value),
     formatter:<UDatepicker />,
     align: 'center',
     editable : true,
@@ -261,6 +298,7 @@ const columns = [
     headerName: 'Image',
     width:100,
     headerAlign: 'center',
+    type : "image",
     renderCell:() => <UserImage />,
     align: 'center',
     editable : false,

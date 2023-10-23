@@ -3,7 +3,7 @@ export const navigations = [
     name: 'ユーザー管理',
     icon: 'person',
     children: [
-      { name: 'ユーザー一覧', iconText: 'SI', path: '/usermanage/userlist' },
+      { name: 'ユーザー一覧', iconText: 'SI', path: '/manageuser/userlist' },
       { name: 'グループ設定', iconText: 'SU', path: '/' },
       { name: 'ランク設定', iconText: 'SU', path: '/' },
       { name: 'ラベル設定', iconText: 'SU', path: '/' }

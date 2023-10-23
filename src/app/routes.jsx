@@ -6,6 +6,7 @@ import Loadable from './components/Loadable';
 import MatxLayout from './components/MatxLayout/MatxLayout';
 import materialRoutes from 'app/views/material-kit/MaterialRoutes';
 import ElementRoots from 'app/views/components/ElementsRoots';
+import ViewsRoots from 'app/views/ViewsRoots';
 
 // session pages
 const NotFound = Loadable(lazy(() => import('app/views/sessions/NotFound')));
@@ -24,6 +25,7 @@ const routes = [
       </AuthGuard>
     ),
     children: [
+      ...ViewsRoots,
       ...materialRoutes,
       ...ElementRoots,
       // dashboard route
